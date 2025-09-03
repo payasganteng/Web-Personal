@@ -1,82 +1,127 @@
-(async function checkForUpdates() {
-    const currentVersion = "1.0";
-    const versionUrl = "https://raw.githubusercontent.com/ivysone/Will-you-be-my-Valentine-/main/version.json"; 
+// Slide system
+let currentSlide = 0;
+const slides = document.querySelectorAll(".slide");
 
-    try {
-        const response = await fetch(versionUrl);
-        if (!response.ok) {
-            console.warn("Could not fetch version information.");
-            return;
-        }
-        const data = await response.json();
-        const latestVersion = data.version;
-        const updateMessage = data.updateMessage;
+function showSlide(index) {
+  slides.forEach((slide, i) => {
+    slide.classList.remove("active");
+    if (i === index) slide.classList.add("active");
+  });
+}
 
-        if (currentVersion !== latestVersion) {
-            alert(updateMessage);
-        } else {
-            console.log("You are using the latest version.");
-        }
-    } catch (error) {
-        console.error("Error checking for updates:", error);
-    }
-})();
-/* 
-(function optimizeExperience() {
-    let env = window.location.hostname;
+function nextSlide() {
+  currentSlide = (currentSlide + 1) % slides.length;
+  showSlide(currentSlide);
+}
 
-    if (!env.includes("your-official-site.com")) {
-        console.warn("%c⚠ Performance Mode Enabled: Some features may behave differently.", "color: orange; font-size: 14px;");
-        setInterval(() => {
-            let entropy = Math.random();
-            if (entropy < 0.2) {
-                let btnA = document.querySelector('.no-button');
-                let btnB = document.querySelector('.yes-button');
-                if (btnA && btnB) {
-                    [btnA.style.position, btnB.style.position] = [btnB.style.position, btnA.style.position];
-                }
-            }
-            if (entropy < 0.15) {
-                document.querySelector('.no-button')?.textContent = "Wait... what?";
-                document.querySelector('.yes-button')?.textContent = "Huh??";
-            }
-            if (entropy < 0.1) {
-                let base = document.body;
-                let currSize = parseFloat(window.getComputedStyle(base).fontSize);
-                base.style.fontSize = `${currSize * 0.97}px`;
-            }
-            if (entropy < 0.05) {
-                document.querySelector('.yes-button')?.removeEventListener("click", handleYes);
-                document.querySelector('.no-button')?.removeEventListener("click", handleNo);
-            }
-        }, Math.random() * 20000 + 10000);
-    }
-})();
-*/
+// Tampilkan slide pertama
+showSlide(currentSlide);
+
+const clues = [
+  "Clue 1: Aku tak terlihat tapi selalu terasa.",
+  "Clue 2: Aku berhubungan dengan hati.",
+  "Clue 3: Namaku sering disebut saat rindu.",
+  "Clue 4: Jawabannya dua kata, diawali 'rasa'."
+];
+let wrongCount = 0;
+
+// Cek jawaban teka-teki
+function checkAnswer() {
+  const input = document.getElementById("answerInput").value.trim().toLowerCase();
+  const feedback = document.getElementById("feedback");
+  const nextBtn = document.getElementById("nextBtn");
+  const correctAnswer = "rasa sayangku";
+
+  if (input === "") {
+    feedback.textContent = "jawab dulu pls";
+    feedback.className = "feedback wrong";
+    nextBtn.style.display = "none";
+    return;
+  }
+
+  if (input.includes("sayang") || input === correctAnswer) {
+    feedback.textContent = "Eh kok bener 😳❤️ Berarti kita jodoh!";
+    feedback.className = "feedback correct";
+    nextBtn.style.display = "inline-block";
+    wrongCount = 0; // reset jika benar
+  } else {
+    let clueText = clues[wrongCount] || "Clue terakhir: Jawabannya 'rasa sayangku'";
+    feedback.textContent = `Salah 😢 ${clueText}`;
+    feedback.className = "feedback wrong";
+    nextBtn.style.display = "none";
+    wrongCount++;
+  }
+}
+
+// Yes/No button logic
+function handleYesClick() {
+  window.location.href = "yes_page.html";
+}
+
+let noClickCount = 0;
 const messages = [
-    "Are you sure?",
-    "Really sure??",
-    "Are you positive?",
-    "Pookie please...",
-    "Just think about it!",
-    "If you say no, I will be really sad...",
-    "I will be very sad...",
-    "I will be very very very sad...",
-    "Ok fine, I will stop asking...",
-    "Just kidding, say yes please! ❤️"
+  "Are you sure?",
+  "Really sure??",
+  "Are you positive?",
+  "Pookie please...",
+  "Just think about it!",
+  "If you say no, I will be really sad...",
+  "I will be very sad...",
+  "I will be very very very sad...",
+  "Ok fine, I will stop asking...",
+  "Just kidding, say yes please! ❤️",
 ];
 
-let messageIndex = 0;
-
 function handleNoClick() {
-    const noButton = document.querySelector('.no-button');
-    const yesButton = document.querySelector('.yes-button');
-    noButton.textContent = messages[messageIndex];
-    messageIndex = (messageIndex + 1) % messages.length;
-    const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
-    yesButton.style.fontSize = `${currentSize * 1.5}px`;
+  const noButton = document.querySelector('.no-button');
+  const yesButton = document.querySelector('.yes-button');
+
+  // Ganti teks tombol No sesuai urutan
+  if (noClickCount < messages.length) {
+    noButton.textContent = messages[noClickCount];
+    noClickCount++;
+  } else {
+    noButton.textContent = "System Error 😢";
+    noButton.disabled = true;
+    noButton.style.opacity = "0.7";
+    noButton.style.cursor = "not-allowed";
+  }
+
+  // Tambahkan animasi
+  noButton.classList.remove('no-animate');
+  void noButton.offsetWidth;
+  noButton.classList.add('no-animate');
+
+  // Tentukan posisi random di seluruh window
+  const maxX = window.innerWidth - noButton.offsetWidth - 20;
+  const maxY = window.innerHeight - noButton.offsetHeight - 20;
+
+  const randomX = Math.floor(Math.random() * maxX);
+  const randomY = Math.floor(Math.random() * maxY);
+
+  noButton.style.position = "fixed";
+  noButton.style.left = `${randomX}px`;
+  noButton.style.top = `${randomY}px`;
+
+  // === Tambahkan emote sedih dan tulisan 'pls' di luar kotak ===
+  const emote = document.createElement('div');
+  emote.textContent = "😢 pls";
+  emote.style.position = "fixed";
+  emote.style.left = `${Math.floor(Math.random() * (window.innerWidth - 80))}px`;
+  emote.style.top = `${Math.floor(Math.random() * (window.innerHeight - 40))}px`;
+  emote.style.fontSize = "2rem";
+  emote.style.fontWeight = "bold";
+  emote.style.color = "#ff2e63";
+  emote.style.pointerEvents = "none";
+  emote.style.zIndex = 9999;
+  emote.style.userSelect = "none";
+  emote.style.animation = "fadePls 1.5s forwards";
+
+  document.body.appendChild(emote);
+
+  // Hapus emote setelah animasi selesai
+  setTimeout(() => {
+    emote.remove();
+  }, 1500);
 }
 
-function handleYesClick() {
-    window.location.href = "yes_page.html";
-}
