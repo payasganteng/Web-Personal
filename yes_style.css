@@ -1,59 +1,72 @@
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #fefefe;
-    font-family: 'Poppins', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 .container {
-    text-align: center;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  padding: 40px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+  backdrop-filter: blur(12px);
 }
 
 .header_text {
-    font-size: 3em;
-    color: #d32f2f;
-    margin-bottom: 20px;
+  font-size: 3em;
+  color: #ff2e63;
+  margin-bottom: 25px;
+  font-weight: 700;
+  animation: popIn 1.2s ease;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .gif_container img {
-    width: 100%; 
-    max-width: 500px; 
-    height: auto; 
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  width: 100%; 
+  max-width: 480px; 
+  height: auto; 
+  border-radius: 20px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
 }
 
-/* Tombol WhatsApp */
 .whatsapp_btn {
-    display: inline-block;
-    background-color: #25D366;
-    color: white;
-    padding: 14px 25px;
-    margin-top: 25px;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: 600;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
-    transition: 0.3s ease;
+  display: inline-block;
+  background: linear-gradient(90deg, #25D366, #1ebe5d);
+  color: white;
+  padding: 15px 28px;
+  margin-top: 25px;
+  border-radius: 40px;
+  font-size: 18px;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.4);
+  transition: 0.3s ease;
+  animation: pulse 1.5s infinite;
 }
 
-/* Efek hover */
 .whatsapp_btn:hover {
-    background-color: #1ebe5d;
-    transform: scale(1.1);
-}
-
-/* Efek animasi pulse biar romantis */
-.whatsapp_btn {
-    animation: pulse 1.5s infinite;
+  transform: scale(1.15) rotate(3deg);
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.08); }
-    100% { transform: scale(1); }
+  0% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+  100% { transform: scale(1); }
 }
