@@ -1,23 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be Mine?</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teka-Teki Love</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="container">
-        <h1>Will you be Mine?</h1>
-        <div class="buttons">
-            <button class="yes-button" onclick="handleYesClick()">Yes</button>
-            <button class="no-button" onclick="handleNoClick()">No</button>
-        </div>
-        <div class="gif_container">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXV6YW83Z2NscGVoNjI5NnhpZnZpMWIyNjdqeGZoZTdxNTE3Y2hjeCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/3oxRmsoHngzymwDl2E/giphy.gif">
-        </div>
+  <div class="container">
+
+    <!-- Slide 1 -->
+    <div class="slide active">
+      <h1>💘 Teka-Teki Untuk Kamuu.. 💘</h1>
+      <p>Klik tombol di bawah untuk mulai...</p>
+      <div class="gif_container">
+        <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="romantic gif">
+      </div>
+      <button onclick="nextSlide()">➡️</button>
     </div>
-    <script src="script.js"></script>
+
+    <!-- Slide 2 (Teka-teki) -->
+    <div class="slide">
+      <h2>Aku selalu ada di siang & malammu, tapi tak pernah terlihat. Apa aku? 🤔</h2>
+      <input type="text" id="answerInput" placeholder="Tulis jawabanmu di sini...">
+      <button onclick="checkAnswer()">Cek Jawaban</button>
+      <p id="feedback" class="feedback"></p>
+      <div class="gif_container">
+        <img src="https://media.giphy.com/media/1BcfiGlOGXzQk/giphy.gif" alt="romantic gif">
+      </div>
+      <button id="nextBtn" style="display:none;" onclick="nextSlide()">➡️</button>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide">
+      <h2>Will you be Mine? 💍</h2>
+      <div class="buttons">
+        <button class="yes-button" onclick="handleYesClick()">Yes</button>
+        <button class="no-button" onclick="handleNoClick()">No</button>
+      </div>
+      <div class="gif_container">
+        <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="romantic gif">
+      </div>
+    </div>
+  </div>
 </body>
 </html>
-
