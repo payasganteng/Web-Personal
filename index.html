@@ -4,149 +4,128 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teka-Teki Love</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #f4f4f8;
+      background: #f5f6f8;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
     }
 
     .container {
-      max-width: 600px;
-      width: 100%;
       background: #fff;
+      padding: 40px;
       border-radius: 20px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
       text-align: center;
+      max-width: 500px;
+      width: 90%;
     }
 
-    h1, h2 {
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
       color: #ff5e78;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
-    .slide {
-      display: none;
-      animation: fadeIn 0.8s ease;
-    }
-    .slide.active { display: block; }
-
-    @keyframes fadeIn {
-      from {opacity: 0; transform: translateY(20px);}
-      to {opacity: 1; transform: translateY(0);}
+    p {
+      font-size: 15px;
+      color: #555;
+      margin-bottom: 25px;
     }
 
+    /* Tombol One UI */
     button {
-      padding: 12px 25px;
+      position: relative;
+      padding: 14px 28px;
       font-size: 16px;
       border: none;
-      border-radius: 25px;
-      background: linear-gradient(90deg, #ff5e78, #ff8a5c);
+      border-radius: 999px;
+      background: linear-gradient(135deg, #ff7b8a, #ff5e78);
       color: white;
       font-weight: 600;
       cursor: pointer;
-      margin: 5px;
-      transition: transform 0.2s;
-    }
-    button:hover { transform: scale(1.05); }
-
-    input[type="text"] {
-      padding: 10px;
-      border: 2px solid #ff5e78;
-      border-radius: 8px;
-      width: 70%;
-      margin: 10px 0;
+      overflow: hidden;
+      margin: 8px;
+      box-shadow: 0 6px 12px rgba(255, 94, 120, 0.25);
+      transition: transform 0.15s ease, box-shadow 0.3s ease;
     }
 
-    .feedback {
-      font-size: 18px;
-      font-weight: bold;
-      min-height: 24px;
-      margin-top: 10px;
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px rgba(255, 94, 120, 0.3);
     }
-    .feedback.correct { color: #4caf50; }
-    .feedback.wrong { color: #f44336; }
 
+    button:active {
+      transform: scale(0.97);
+      box-shadow: 0 4px 10px rgba(255, 94, 120, 0.2);
+    }
+
+    button::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.4s ease, height 0.4s ease, opacity 0.6s ease;
+      opacity: 0;
+    }
+
+    button:active::after {
+      width: 200%;
+      height: 200%;
+      opacity: 0;
+    }
+
+    /* Kontrol musik */
     .music-controls {
-      margin-top: 15px;
+      margin-top: 20px;
     }
-    .music-controls input { width: 200px; }
+
+    input[type="range"] {
+      width: 180px;
+      margin-left: 10px;
+    }
   </style>
 </head>
 <body>
   <div class="container">
-    <!-- Slide 1 -->
-    <div class="slide active">
-      <h1>💘 Teka-Teki Untuk Kamu 💘</h1>
-      <p>Klik tombol di bawah untuk mulai...</p>
-      <button onclick="nextSlide()">➡️ Mulai</button>
-      <div class="music-controls">
-        <button onclick="playMusic()">🎵 Play Lagu</button>
-        <input type="range" min="0" max="1" step="0.1" value="0.3" onchange="setVolume(this.value)">
-      </div>
-    </div>
+    <h1>💘 Teka-Teki Untuk Kamu 💘</h1>
+    <p>Klik tombol di bawah untuk mulai...</p>
+    <button onclick="nextSlide()">➡️ Mulai</button>
 
-    <!-- Slide 2 -->
-    <div class="slide">
-      <h2>Aku selalu ada di siang & malammu, tapi tak pernah terlihat. Apa aku? 🤔</h2>
-      <input type="text" id="answerInput" placeholder="Tulis jawabanmu...">
-      <button onclick="checkAnswer()">Cek</button>
-      <p id="feedback" class="feedback"></p>
-      <button id="nextBtn" style="display:none;" onclick="nextSlide()">➡️</button>
-    </div>
-
-    <!-- Slide 3 -->
-    <div class="slide">
-      <h2>Will you be Mine? 💍</h2>
-      <button onclick="handleYesClick()">Yes 💖</button>
-      <button onclick="handleNoClick()">No 😢</button>
+    <div class="music-controls">
+      <button onclick="playMusic()">🎵 Play Lagu</button>
+      <input type="range" min="0" max="1" step="0.1" value="0.3" onchange="setVolume(this.value)">
     </div>
   </div>
 
   <script>
-    let currentSlide = 0;
-    let slides = document.querySelectorAll('.slide');
     let audio = new Audio("bergema.mp3");
-
-    function nextSlide() {
-      slides[currentSlide].classList.remove('active');
-      currentSlide++;
-      if (currentSlide >= slides.length) currentSlide = 0;
-      slides[currentSlide].classList.add('active');
-    }
-
-    function checkAnswer() {
-      let answer = document.getElementById("answerInput").value.trim().toLowerCase();
-      let feedback = document.getElementById("feedback");
-      let nextBtn = document.getElementById("nextBtn");
-      if (answer === "cinta" || answer === "love") {
-        feedback.textContent = "❤️ Benar!";
-        feedback.className = "feedback correct";
-        nextBtn.style.display = "inline-block";
-      } else {
-        feedback.textContent = "😢 Salah!";
-        feedback.className = "feedback wrong";
-      }
-    }
-
-    function handleYesClick() { 
-      window.location.href = "https://wa.me/62859106806310?text=Iya%20aku%20mau%20💖"; 
-    }
-    function handleNoClick() { alert("Oh no 😢"); }
 
     function playMusic() {
       audio.volume = 0.3;
       audio.play();
       audio.loop = true;
     }
-    function setVolume(val) { audio.volume = val; }
+
+    function setVolume(val) {
+      audio.volume = val;
+    }
+
+    function nextSlide() {
+      // nanti bisa diarahkan ke halaman lain atau WhatsApp
+      window.location.href = "https://wa.me/62859106806310"; // ganti nomor WA kamu
+    }
   </script>
 </body>
 </html>
-
