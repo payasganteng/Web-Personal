@@ -3,26 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teka-Teki Love Anime</title>
+  <title>Teka-Teki Love</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #f4f4f8 url('manga-jujutsu-kaisen.png') no-repeat center center fixed;
-      background-size: cover;
+      background: #f4f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .container {
-      max-width: 800px;
-      margin: 60px auto;
-      background: rgba(255, 255, 255, 0.9);
+      max-width: 600px;
+      width: 100%;
+      background: #fff;
       border-radius: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-      padding: 40px;
+      padding: 30px;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
 
     h1, h2 {
@@ -55,22 +56,6 @@
     }
     button:hover { transform: scale(1.05); }
 
-    .gif_container img {
-      max-width: 100%;
-      border-radius: 15px;
-      margin-top: 20px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    }
-
-    .anime-side {
-      position: absolute;
-      right: -40px;
-      bottom: 0;
-      width: 220px;
-      opacity: 0.9;
-      z-index: 0;
-    }
-
     input[type="text"] {
       padding: 10px;
       border: 2px solid #ff5e78;
@@ -96,16 +81,10 @@
 </head>
 <body>
   <div class="container">
-    <!-- Gambar anime samping -->
-    <img src="gojo.jpg" alt="Anime Character" class="anime-side">
-
     <!-- Slide 1 -->
     <div class="slide active">
       <h1>💘 Teka-Teki Untuk Kamu 💘</h1>
       <p>Klik tombol di bawah untuk mulai...</p>
-      <div class="gif_container">
-        <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="gif">
-      </div>
       <button onclick="nextSlide()">➡️ Mulai</button>
       <div class="music-controls">
         <button onclick="playMusic()">🎵 Play Lagu</button>
@@ -119,9 +98,6 @@
       <input type="text" id="answerInput" placeholder="Tulis jawabanmu...">
       <button onclick="checkAnswer()">Cek</button>
       <p id="feedback" class="feedback"></p>
-      <div class="gif_container">
-        <img src="https://media.giphy.com/media/1BcfiGlOGXzQk/giphy.gif" alt="gif">
-      </div>
       <button id="nextBtn" style="display:none;" onclick="nextSlide()">➡️</button>
     </div>
 
@@ -130,9 +106,6 @@
       <h2>Will you be Mine? 💍</h2>
       <button onclick="handleYesClick()">Yes 💖</button>
       <button onclick="handleNoClick()">No 😢</button>
-      <div class="gif_container">
-        <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="gif">
-      </div>
     </div>
   </div>
 
@@ -162,7 +135,9 @@
       }
     }
 
-    function handleYesClick() { alert("Yay! 💖"); }
+    function handleYesClick() { 
+      window.location.href = "https://wa.me/6281234567890?text=Iya%20aku%20mau%20💖"; 
+    }
     function handleNoClick() { alert("Oh no 😢"); }
 
     function playMusic() {
