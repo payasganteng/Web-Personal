@@ -1,3 +1,11 @@
+// Musik
+function playMusic() {
+  const music = document.getElementById("bg-music");
+  music.volume = 0.3; // kecilkan volume default
+  music.play();
+  document.getElementById("musicBtn").style.display = "none"; 
+}
+
 // Slide system
 let currentSlide = 0;
 const slides = document.querySelectorAll(".slide");
@@ -13,10 +21,9 @@ function nextSlide() {
   currentSlide = (currentSlide + 1) % slides.length;
   showSlide(currentSlide);
 }
-
-// Tampilkan slide pertama
 showSlide(currentSlide);
 
+// Teka-teki
 const clues = [
   "Clue 1: Aku tak terlihat tapi selalu terasa.",
   "Clue 2: Aku berhubungan dengan hati.",
@@ -25,7 +32,6 @@ const clues = [
 ];
 let wrongCount = 0;
 
-// Cek jawaban teka-teki
 function checkAnswer() {
   const input = document.getElementById("answerInput").value.trim().toLowerCase();
   const feedback = document.getElementById("feedback");
@@ -43,7 +49,7 @@ function checkAnswer() {
     feedback.textContent = "Eh kok bener 😳❤️ Berarti kita jodoh!";
     feedback.className = "feedback correct";
     nextBtn.style.display = "inline-block";
-    wrongCount = 0; // reset jika benar
+    wrongCount = 0;
   } else {
     let clueText = clues[wrongCount] || "Clue terakhir: Jawabannya 'rasa sayangku'";
     feedback.textContent = `Salah 😢 ${clueText}`;
@@ -74,9 +80,7 @@ const messages = [
 
 function handleNoClick() {
   const noButton = document.querySelector('.no-button');
-  const yesButton = document.querySelector('.yes-button');
 
-  // Ganti teks tombol No sesuai urutan
   if (noClickCount < messages.length) {
     noButton.textContent = messages[noClickCount];
     noClickCount++;
@@ -87,15 +91,9 @@ function handleNoClick() {
     noButton.style.cursor = "not-allowed";
   }
 
-  // Tambahkan animasi
-  noButton.classList.remove('no-animate');
-  void noButton.offsetWidth;
-  noButton.classList.add('no-animate');
-
-  // Tentukan posisi random di seluruh window
+  // Random posisi tombol
   const maxX = window.innerWidth - noButton.offsetWidth - 20;
   const maxY = window.innerHeight - noButton.offsetHeight - 20;
-
   const randomX = Math.floor(Math.random() * maxX);
   const randomY = Math.floor(Math.random() * maxY);
 
@@ -103,7 +101,7 @@ function handleNoClick() {
   noButton.style.left = `${randomX}px`;
   noButton.style.top = `${randomY}px`;
 
-  // === Tambahkan emote sedih dan tulisan 'pls' di luar kotak ===
+  // Efek emote 😢
   const emote = document.createElement('div');
   emote.textContent = "😢 pls";
   emote.style.position = "fixed";
@@ -118,10 +116,5 @@ function handleNoClick() {
   emote.style.animation = "fadePls 1.5s forwards";
 
   document.body.appendChild(emote);
-
-  // Hapus emote setelah animasi selesai
-  setTimeout(() => {
-    emote.remove();
-  }, 1500);
+  setTimeout(() => emote.remove(), 1500);
 }
-
