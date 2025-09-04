@@ -10,6 +10,26 @@
 <body>
   <div class="container">
 
+    <!-- Tombol Musik -->
+    <div style="margin-bottom: 20px; text-align: center;">
+      <button id="musicBtn" onclick="playMusic()" 
+        style="padding: 10px 20px; 
+               background-color: #ff4d6d; 
+               color: white; 
+               border: none; 
+               border-radius: 10px; 
+               cursor: pointer; 
+               font-size: 16px;">
+        🎶 Putar Musik
+      </button>
+    </div>
+
+    <!-- Audio -->
+    <audio id="bg-music" loop>
+      <source src="bergema.mp3" type="audio/mpeg">
+      Browser kamu tidak mendukung audio.
+    </audio>
+
     <!-- Slide 1 -->
     <div class="slide active">
       <h1>💘 Teka-Teki Untuk Kamuu.. 💘</h1>
@@ -44,5 +64,13 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function playMusic() {
+      const music = document.getElementById("bg-music");
+      music.play();
+      document.getElementById("musicBtn").style.display = "none"; // tombol hilang setelah diklik
+    }
+  </script>
 </body>
 </html>
