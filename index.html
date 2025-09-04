@@ -69,6 +69,7 @@
       box-shadow: 0 4px 10px rgba(255, 94, 120, 0.2);
     }
 
+    /* Ripple effect */
     button::after {
       content: "";
       position: absolute;
@@ -82,7 +83,6 @@
       transition: width 0.4s ease, height 0.4s ease, opacity 0.6s ease;
       opacity: 0;
     }
-
     button:active::after {
       width: 200%;
       height: 200%;
@@ -107,10 +107,57 @@
     .feedback.correct { color: #4caf50; }
     .feedback.wrong { color: #f44336; }
 
-    .music-controls {
-      margin-top: 15px;
+    /* === Music Player ala One UI === */
+    .music-player {
+      margin-top: 20px;
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border-radius: 20px;
+      padding: 20px;
+      color: white;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      text-align: left;
     }
-    .music-controls input { width: 200px; }
+
+    .music-player h3 {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .controls button {
+      background: #334155;
+      padding: 10px 14px;
+      border-radius: 50%;
+      font-size: 14px;
+      margin: 0 5px;
+      box-shadow: none;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      background: #475569;
+      border-radius: 5px;
+      outline: none;
+      margin-top: 12px;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      background: #38bdf8;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 5px rgba(56, 189, 248, 0.8);
+    }
   </style>
 </head>
 <body>
@@ -120,9 +167,16 @@
       <h1>💘 Teka-Teki Untuk Kamu 💘</h1>
       <p>Klik tombol di bawah untuk mulai...</p>
       <button onclick="nextSlide()">➡️ Mulai</button>
-      <div class="music-controls">
-        <button onclick="playMusic()">🎵 Play Lagu</button>
-        <input type="range" min="0" max="1" step="0.1" value="0.3" onchange="setVolume(this.value)">
+
+      <!-- Music Player ala One UI -->
+      <div class="music-player">
+        <h3>🎵 Now Playing</h3>
+        <div class="controls">
+          <button onclick="prevTrack()">⏮</button>
+          <button onclick="togglePlay()">⏯</button>
+          <button onclick="nextTrack()">⏭</button>
+        </div>
+        <input class="volume-slider" type="range" min="0" max="1" step="0.1" value="0.3" onchange="setVolume(this.value)">
       </div>
     </div>
 
@@ -147,6 +201,7 @@
     let currentSlide = 0;
     let slides = document.querySelectorAll('.slide');
     let audio = new Audio("bergema.mp3");
+    let isPlaying = false;
 
     function nextSlide() {
       slides[currentSlide].classList.remove('active');
@@ -170,16 +225,31 @@
     }
 
     function handleYesClick() { 
-      window.location.href = "https://wa.me/6281234567890?text=Iya%20aku%20mau%20💖"; 
+      window.location.href = "https://wa.me/62859106806310?text=Iya%20aku%20mau%20💖"; 
     }
     function handleNoClick() { alert("Oh no 😢"); }
 
-    function playMusic() {
-      audio.volume = 0.3;
-      audio.play();
-      audio.loop = true;
+    function togglePlay() {
+      if (isPlaying) {
+        audio.pause();
+      } else {
+        audio.loop = true;
+        audio.play();
+      }
+      isPlaying = !isPlaying;
     }
-    function setVolume(val) { audio.volume = val; }
+
+    function prevTrack() {
+      audio.currentTime = 0; // rewind
+    }
+
+    function nextTrack() {
+      audio.currentTime = audio.duration - 2; // skip to end
+    }
+
+    function setVolume(val) {
+      audio.volume = val;
+    }
   </script>
 </body>
 </html>
