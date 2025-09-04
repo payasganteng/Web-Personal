@@ -9,14 +9,14 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #f4f4f8 url('bg-manga.png') no-repeat center center fixed; /* tambahkan background manga panel */
+      background: #f4f4f8 url('manga-jujutsu-kaisen.png') no-repeat center center fixed;
       background-size: cover;
     }
 
     .container {
       max-width: 800px;
-      margin: 50px auto;
-      background: rgba(255,255,255,0.9);
+      margin: 60px auto;
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 20px;
       box-shadow: 0 8px 20px rgba(0,0,0,0.15);
       padding: 40px;
@@ -34,10 +34,7 @@
       display: none;
       animation: fadeIn 0.8s ease;
     }
-
-    .slide.active {
-      display: block;
-    }
+    .slide.active { display: block; }
 
     @keyframes fadeIn {
       from {opacity: 0; transform: translateY(20px);}
@@ -53,12 +50,10 @@
       color: white;
       font-weight: 600;
       cursor: pointer;
+      margin: 5px;
       transition: transform 0.2s;
     }
-
-    button:hover {
-      transform: scale(1.05);
-    }
+    button:hover { transform: scale(1.05); }
 
     .gif_container img {
       max-width: 100%;
@@ -69,10 +64,11 @@
 
     .anime-side {
       position: absolute;
-      right: -50px;
+      right: -40px;
       bottom: 0;
-      width: 200px;
+      width: 220px;
       opacity: 0.9;
+      z-index: 0;
     }
 
     input[type="text"] {
@@ -89,26 +85,26 @@
       min-height: 24px;
       margin-top: 10px;
     }
-
     .feedback.correct { color: #4caf50; }
     .feedback.wrong { color: #f44336; }
 
     .music-controls {
       margin-top: 15px;
     }
+    .music-controls input { width: 200px; }
   </style>
 </head>
 <body>
   <div class="container">
     <!-- Gambar anime samping -->
-    <img src="anime-char.png" alt="Anime Character" class="anime-side">
+    <img src="gojo.jpg" alt="Anime Character" class="anime-side">
 
     <!-- Slide 1 -->
     <div class="slide active">
       <h1>💘 Teka-Teki Untuk Kamu 💘</h1>
       <p>Klik tombol di bawah untuk mulai...</p>
       <div class="gif_container">
-        <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif">
+        <img src="https://media.giphy.com/media/3o6Zt481isNVuQI1l6/giphy.gif" alt="gif">
       </div>
       <button onclick="nextSlide()">➡️ Mulai</button>
       <div class="music-controls">
@@ -124,7 +120,7 @@
       <button onclick="checkAnswer()">Cek</button>
       <p id="feedback" class="feedback"></p>
       <div class="gif_container">
-        <img src="https://media.giphy.com/media/1BcfiGlOGXzQk/giphy.gif">
+        <img src="https://media.giphy.com/media/1BcfiGlOGXzQk/giphy.gif" alt="gif">
       </div>
       <button id="nextBtn" style="display:none;" onclick="nextSlide()">➡️</button>
     </div>
@@ -135,7 +131,7 @@
       <button onclick="handleYesClick()">Yes 💖</button>
       <button onclick="handleNoClick()">No 😢</button>
       <div class="gif_container">
-        <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif">
+        <img src="https://media.giphy.com/media/26ufdipQqU2lhNA4g/giphy.gif" alt="gif">
       </div>
     </div>
   </div>
@@ -168,7 +164,12 @@
 
     function handleYesClick() { alert("Yay! 💖"); }
     function handleNoClick() { alert("Oh no 😢"); }
-    function playMusic() { audio.volume = 0.3; audio.play(); audio.loop = true; }
+
+    function playMusic() {
+      audio.volume = 0.3;
+      audio.play();
+      audio.loop = true;
+    }
     function setVolume(val) { audio.volume = val; }
   </script>
 </body>
